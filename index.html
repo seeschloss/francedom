@@ -16,12 +16,6 @@ svg {
 	stroke-width: 1px;
 	fill: lightyellow;
 }
-.river {
-	stroke: #ABCDEF;
-	stroke-width: 1px;
-	fill: none;
-}
-
 
 .FRA {
 	fill: lightgreen;
@@ -53,8 +47,7 @@ var path = d3.geo.path()
 
 queue()
     .defer(d3.json, "france-dom-tom.topojson")
-    .defer(d3.json, "rivers.json")
-    .await(function(error, borders, rivers) {
+    .await(function(error, border) {
 		d3.map(borders.objects).values().forEach(function(o) {
 			var topo = topojson.feature(borders, o).features;
 
