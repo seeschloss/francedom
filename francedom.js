@@ -6,6 +6,7 @@ function franceDom() {
 		.rotate([-3, 0])
 		.parallels([44, 49]);
 
+
 	// Départements d'outre-mer
 	var guadeloupe = d3.geo.conicEqualArea()
 		.rotate([61.5, 0])
@@ -33,9 +34,7 @@ function franceDom() {
 		.parallels([-8, -18]);
 
 
-
 	// Territoires habités
-
 	var nouvelleCaledonie = d3.geo.conicEqualArea()
 		.rotate([-166.45, 0])
 		.center([0, -21.25])
@@ -62,9 +61,7 @@ function franceDom() {
 		.parallels([40, 50]);
 
 
-
 	// Territoires inhabités
-
 	var crozet = d3.geo.conicEqualArea()
 		.rotate([-51.5, 0])
 		.center([0, -46.4])
@@ -89,6 +86,7 @@ function franceDom() {
 		.rotate([+109.25, 0])
 		.center([0, +10.3])
 		.parallels([8, 18]);
+
 
 
 	var point,
@@ -304,21 +302,26 @@ function franceDom() {
 	france.scale = function(_) {
 		if (!arguments.length) return metropole.scale();
 		metropole.scale(_);
-		guadeloupe.scale(_        * 1.5);
-		martinique.scale(_        * 1.5);
-		guyane.scale(_            * 0.5);
-		reunion.scale(_           * 1.0);
-		mayotte.scale(_           * 1.5);
-		nouvelleCaledonie.scale(_ * 0.5);
-		wallis.scale(_            * 2.0);
-		futuna.scale(_            * 2.0);
-		polynesie.scale(_         * 1.5);
-		saintPierreEtMiquelon.scale(_         * 1.5);
-		crozet.scale(_            * 1.5);
-		kerguelen.scale(_         * 1.0);
-		amsterdam.scale(_         * 1.5);
-		saintPaul.scale(_         * 1.5);
-		clipperton.scale(_        * 2.0);
+
+		guyane.scale(_                * 0.5);
+		nouvelleCaledonie.scale(_     * 0.5);
+
+		reunion.scale(_               * 1.0);
+		kerguelen.scale(_             * 1.0);
+		
+		guadeloupe.scale(_            * 1.5);
+		martinique.scale(_            * 1.5);
+		mayotte.scale(_               * 1.5);
+		polynesie.scale(_             * 1.5);
+		saintPierreEtMiquelon.scale(_ * 1.5);
+		crozet.scale(_                * 1.5);
+		amsterdam.scale(_             * 1.5);
+		saintPaul.scale(_             * 1.5);
+
+		wallis.scale(_                * 2.0);
+		futuna.scale(_                * 2.0);
+		clipperton.scale(_            * 2.0);
+
 		return france.translate(metropole.translate());
 	};
 
