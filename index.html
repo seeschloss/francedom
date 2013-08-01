@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+<style>
+
+svg {
+	border: 1px solid black;
+}
+
+.border {
+	stroke: lightblue;
+	stroke-width: 8px;
+	fill: none;
+}
+.border2 {
+	stroke: #449;
+	stroke-width: 1px;
+	fill: lightyellow;
+}
+.river {
+	stroke: #ABCDEF;
+	stroke-width: 1px;
+	fill: none;
+}
+
+
+.FRA {
+	fill: lightgreen;
+}
+
+</style>
+</head>
+<body>
+
+<script src="d3.v3.min.js"></script>
+<script src="topojson.v1.js"></script>
+<script src="queue.v1.min.js"></script>
+<script src="francedom.js"></script>
+
+<script>
+
+var width = window.innerWidth - 30,
+    height = window.innerHeight - 80;
+
+var projection = d3.geo.franceDom();
+
+var svg = d3.select("body").append("svg")
+	.attr("width", width)
+	.attr("height", height)
+	.style("z-index", "-1");
+
+var path = d3.geo.path()
+	.projection(projection);
+
+queue()
+    .defer(d3.json, "france-dom-tom.topojson")
+    .defer(d3.json, "rivers.json")
+    .await(function(error, borders, rivers) {
+		d3.map(borders.objects).values().forEach(function(o) {
+			var topo = topojson.feature(borders, o).features;
+
+			svg.selectAll(".border")
+				.data(topo).enter().append('path')
+				.attr("class", "border")
+				.attr("d", path);
+
+			svg.selectAll(".border2")
+				.data(topo).enter().append('path')
+				.attr("class", function(d) { return "border2 " + d.properties.adm0_a3; })
+				.attr("d", path)
+				.append('title')
+					.text(function(d) { return d.properties.admin; })
+		});
+});
+
+</script>
+</body>
