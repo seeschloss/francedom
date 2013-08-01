@@ -58,7 +58,7 @@ Les TAAF et Clipperton ne comportent pas de communes, les deux communes de Saint
 communes.tsv
 --------
 Liste des toutes les communes ou autres entités dotées d'un code INSEE. En pratique, ce sont toutes les communes de métropole, DOM, collectivités d'outre-mer, ainsi que les districts de Wallis-et-Futuna, les bases des TAAF, l'île Europa (un seul code est attribué pour les Îles Éparses, Europa en est la plus grande île) et Clipperton.
-Ce fichier comporte les noms (adaptés à l'affichage, avec accents, etc) des entités, leur code INSEE, leurs coordonnées géographique, et éventuellent le nom du point utilisé comme référence géographique (pour les TAAF, le nom associé au code INSEE est le nom de l'île ou archipel, et le point correspond à la base principale).
+Ce fichier comporte les noms (adaptés à l'affichage, avec accents, etc) des entités, leur code INSEE, leurs coordonnées géographique, leur statut de chef-lieu de département, de région (ou statuts comparables) et éventuellent le nom du point utilisé comme référence géographique (pour les TAAF, le nom associé au code INSEE est le nom de l'île ou archipel, et le point correspond à la base principale).
 
 france-dom-tom.topojson
 --------
