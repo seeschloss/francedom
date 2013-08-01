@@ -47,7 +47,7 @@ var path = d3.geo.path()
 
 queue()
     .defer(d3.json, "france-dom-tom.topojson")
-    .await(function(error, border) {
+    .await(function(error, borders) {
 		d3.map(borders.objects).values().forEach(function(o) {
 			var topo = topojson.feature(borders, o).features;
 
