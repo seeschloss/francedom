@@ -7,12 +7,12 @@ svg, canvas {
 	position: absolute;
 }
 
-.border {
+.border-outer {
 	stroke: lightblue;
 	stroke-width: 8px;
 	fill: none;
 }
-.border2 {
+.border {
 	stroke: #449;
 	stroke-width: 1px;
 	fill: lightyellow;
@@ -30,11 +30,6 @@ svg, canvas {
 	fill: black;
 	stroke: lightgrey;
 	stroke-width: 0.6px;
-}
-
-.graticule {
-	fill: none;
-	stroke: lightgrey;
 }
 
 </style>
@@ -66,50 +61,36 @@ var canvas = d3.select("body").append("canvas")
 var path = d3.geo.path()
 	.projection(projection);
 
-var graticule = d3.geo.graticule()
-	.step([0.25, 0.25])
-	.majorStep([1, 1]);
-
 queue()
     .defer(d3.json, "france-dom-tom.topojson")
     .defer(d3.json, "territoires-communes.topojson")
     .defer(d3.tsv, "communes.tsv")
     .await(function(error, borders, communes, coord) {
-			svg.append("path")
-			    .datum(graticule)
-				    .attr("class", "graticule line")
-					    .attr("d", path);
-
 		d3.map(borders.objects).values().forEach(function(o) {
 			var topo = topojson.feature(borders, o).features;
 
 			svg.selectAll(".border")
 				.data(topo).enter().append('path')
-				.attr("class", "border")
+				.attr("class", "border-outer")
 				.attr("d", path);
 
 			svg.selectAll(".border2")
 				.data(topo).enter().append('path')
-				.attr("class", function(d) { return "border2 " + d.properties.adm0_a3; })
+				.attr("class", function(d) { return "border " + d.properties.adm0_a3; })
 				.attr("d", path)
 				.append('title')
 					.text(function(d) { return d.properties.admin; })
 		});
 
 		var points = coord.filter(function(d) {
+			// Display labels for all prefectures, (sub)antarctic bases, and Clipperton.
 			if (d.chef_lieu_region == 1 || (d.chef_lieu_departement == 1 && d.departement > 900) || d.departement == 989) {
 				d.xy = projection([+d.longitude, +d.latitude]);
-
-				if (d.xy) {
-					return true;
-				} else {
-					console.log(d);
-				}
+				if (d.xy) { return true; }
 			}
 
 			return false;
 		});
-		console.log(points);
 		svg.selectAll(".prefecture")
 			.data(points)
 			.enter().append("circle")
@@ -126,6 +107,7 @@ queue()
 				.style("text-anchor", function(d) {
 					d.xoffset = +5;
 					d.yoffset = -5;
+					// Some exceptions to nicely position labels.
 					switch (+d.departement) {
 						case 21:
 							d.xoffset = -5;
