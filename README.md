@@ -5,7 +5,7 @@ Projection D3js pour afficher France + DOM + COM sur une seule carte compacte.
 
 Une démonstration est visible à cette adresse : https://ssz.fr/francedom
 
-Tous les départements et collectivités d'outre-mer sont inclus :
+Tous les départements et collectivités d'outre-mer sont inclus, à l'exception de Saint-Martin et Saint-Barthélémy qui sont vraiment trop petites :
 
 * Guadeloupe
 * Martinique
