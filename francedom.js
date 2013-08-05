@@ -338,6 +338,8 @@ function franceDom() {
 
 	france.translate = function(_) {
 		if (!arguments.length) return france.areas.metropole.projection.translate();
+		var coordinates = _;
+		france.areas.metropole.projection.translate(coordinates);
 
 		france.areasMap.forEach(function(i, d) {
 			if (d.center) {
