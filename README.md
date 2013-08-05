@@ -14,7 +14,7 @@ Tous les départements et collectivités d'outre-mer sont inclus, à l'exception
 * Mayotte
 * Nouvelle-Calédonie
 * Wallis-et-Futuna
-* Polynésie française (uniquement Tahiti et Moorea)
+* Polynésie française
 * Terres Australes et Antarctiques Françaises
   * Crozet (uniquement l'île de la Possession)
   * Kerguelen
@@ -28,9 +28,11 @@ Pour que tous les territoires soient raisonnablement visibles, l'échelle varie 
 * x 0,5
   * Guyane
   * Nouvelle-Calédonie
+  * Polynésie (lorsque toutes les îles sont affichées)
 * x 1
   * Réunion
   * Îles Kerguelen
+  * Polynésie (lorsque Tahiti et Moorea uniquement sont affichées)
 * x 1,5
   * Guadeloupe
   * Martinique
@@ -43,8 +45,22 @@ Pour que tous les territoires soient raisonnablement visibles, l'échelle varie 
   * Wallis et Futuna
   * Clipperton
 
-De plus, les distances entre Wallis et Futuna, et Saint-Paul et Amsterdam ne sont pas à l'échelle.
+De plus, les distances entre Wallis et Futuna, Saint-Paul et Amsterdam, et les groupes d'îles de Polynésie (îles de la Société, Tuamotu, Marquises, et Australes) ne sont pas à l'échelle.
 
+
+Utilisation
+--------
+La projection s'utilise comme n'importe quelle autre projection de d3.geo :
+```javascript
+var projection = d3.geo.franceDom()
+```
+
+Par défaut, seules Tahiti et Moorea sont incluses (entre Wallis-et-Futuna et la Corse), l'option <code>showPolynesie(true)</code> permet d'afficher la Polynésie française au complet (à l'est de la métropole).
+```javascript
+var projection = d3.geo.franceDom()
+  .showPolynesie(true);
+```
+ 
 
 Données géographiques
 =========
