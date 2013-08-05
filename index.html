@@ -5,6 +5,7 @@
 svg, canvas {
 	display: block;
 	position: absolute;
+	border: 1px dotted lightgrey;
 }
 
 .border-outer {
@@ -19,8 +20,12 @@ svg, canvas {
 	cursor: help;
 }
 
-.FRA {
+.border.FRA {
 	fill: lightgreen;
+}
+
+.border-outer.PYF.complete {
+	stroke-width: 3px;
 }
 
 .prefecture-label {
@@ -34,23 +39,59 @@ svg, canvas {
 
 h1 {
 	font-size: 12px;
+	display: inline;
+}
+
+.graticule {
+	stroke: lightgrey;
+	fill: none;
+}
+
+form {
+	display: inline-block;
+	font-family: sans-serif;
+	font-size: 10px;
+}
+
+form input {
+	vertical-align: middle;
 }
 
 </style>
+
+<title>Projection d3js France + DOM + COM.</title>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@badaseong" />
+
+<meta property="og:site_name" content="Ssz.fr">
+<meta property="og:url" content="https://ssz.fr/francedom">
+<meta property="og:title" content="Projection d3js France + DOM + COM" />
+<meta property="og:image" content="http://render.sauf.ca/ssz.fr/francedom" />
+<meta property="og:image:height" content="768" />
+<meta property="og:image:width"  content="1024" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:description" content="Projection d3js adaptée à l'affichage de la métropole, DOM et collectivités d'outre-mer de manière compacte." />
+<meta        name="description" content="Projection d3js adaptée à l'affichage de la métropole, DOM et collectivités d'outre-mer de manière compacte." />
+
 </head>
 <body>
 
 <h1><a href="http://github.com/seeschloss/francedom">http://github.com/seeschloss/francedom</a></h1>
 
+<form>
+	<input type="checkbox" id="polynesie" name="polynesie" /><label for="polynesie">Polynésie complète</label>
+</form>
+
 <script src="d3.v3.min.js"></script>
 <script src="topojson.v1.js"></script>
 <script src="queue.v1.min.js"></script>
-<script src="francedom.js"></script>
+<script src="francedom.test.js"></script>
 
 <script>
 
-var width = window.innerWidth - 30,
-    height = window.innerHeight + 80;
+var width = 1000,
+    height = 600;
 
 var projection = d3.geo.franceDom();
 
@@ -68,19 +109,20 @@ var path = d3.geo.path()
 	.projection(projection);
 
 queue()
-    .defer(d3.json, "france-dom-tom.topojson")
+    .defer(d3.json, "test.topojson")
     .defer(d3.json, "territoires-communes.topojson")
     .defer(d3.tsv, "communes.tsv")
     .await(function(error, borders, communes, coord) {
 		d3.map(borders.objects).values().forEach(function(o) {
+			b = o;
 			var topo = topojson.feature(borders, o).features;
 
-			svg.selectAll(".border")
+			svg.selectAll(".border-outer")
 				.data(topo).enter().append('path')
-				.attr("class", "border-outer")
+				.attr("class", function(d) { return "border-outer " + d.properties.adm0_a3 + " " + (d.properties.adm0_a3 === "PYF" && d3.select("#polynesie")[0][0].checked ? "complete" : ""); })
 				.attr("d", path);
 
-			svg.selectAll(".border2")
+			svg.selectAll(".border")
 				.data(topo).enter().append('path')
 				.attr("class", function(d) { return "border " + d.properties.adm0_a3; })
 				.attr("d", path)
@@ -142,10 +184,11 @@ queue()
 							return "middle";
 						case 984:
 							d.xoffset =  0;
-							d.yoffset = -7;
+							d.yoffset = -9;
 							return "middle";
 						case 976:
 						case 986:
+						case 988:
 							d.xoffset = -5;
 							return "end";
 						default:
@@ -166,6 +209,38 @@ queue()
 			});
 		};
 		drawCommunes(d3.map(communes.objects).values());
+
+
+		d3.select('#polynesie').on('change', function() {
+			projection.showPolynesie(this.checked);
+			svg.selectAll(".border")
+				.transition().duration(1000)
+				.attr("d", path);
+
+			svg.selectAll(".border-outer")
+				.attr("class", function(d) { return "border-outer " + d.properties.adm0_a3 + " " + (d.properties.adm0_a3 === "PYF" && d3.select("#polynesie")[0][0].checked ? "complete" : ""); })
+				.transition().duration(1000)
+				.attr("d", path)
+
+
+			var points = coord.filter(function(d) {
+				// Display labels for all prefectures, (sub)antarctic bases, and Clipperton.
+				if (d.chef_lieu_region == 1 || (d.chef_lieu_departement == 1 && d.departement > 900) || d.departement == 989) {
+					d.xy = projection([+d.longitude, +d.latitude]);
+					if (d.xy) { return true; }
+				}
+
+				return false;
+			});
+			svg.selectAll(".prefecture-label")
+				.transition().duration(1000)
+				.attr("transform", function(d) { return "translate(" + [d.xy[0] + d.xoffset, d.xy[1] + d.yoffset] + ")"; })
+
+			svg.selectAll(".prefecture")
+				.transition().duration(1000)
+				.attr("cx", function(d) { return d.xy[0]; })
+				.attr("cy", function(d) { return d.xy[1]; });
+			});
 });
 
 var drawPath = function(d, canvas, fill) {
