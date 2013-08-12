@@ -227,8 +227,8 @@ function franceDom() {
 			france.areas.societe = {
 				center: [ 9.70, 46.00],
 				clip: [
-					[-154.89, -15.88],
-					[-147.96, -17.99]
+					[-154.90, -15.50],
+					[-149.01, -18.00]
 				],
 
 				scale: 0.5,
@@ -241,8 +241,8 @@ function franceDom() {
 			france.areas.tuamotu = {
 				center: [ 8.00, 46.50],
 				clip: [
-					[-148.98, -13.62],
-					[-134.73, -23.32]
+					[-149.00, -13.50],
+					[-133.70, -23.47]
 				],
 
 				scale: 0.4,
@@ -255,8 +255,8 @@ function franceDom() {
 			france.areas.marquises = {
 				center: [ 8.00, 46.00],
 				clip: [
-					[-141.13, - 7.50],
-					[-137.95, -10.98]
+					[-141.50, - 7.60],
+					[-137.50, -11.00]
 				],
 
 				scale: 0.4,
@@ -269,8 +269,8 @@ function franceDom() {
 			france.areas.australes = {
 				center: [10.00, 47.00],
 				clip: [
-					[-154.88, -21.69],
-					[-143.19, -28.06]
+					[-155.00, -21.60],
+					[-142.80, -28.10]
 				],
 
 				scale: 0.4,
@@ -284,8 +284,8 @@ function franceDom() {
 			france.areas.tahitiMoorea = {
 				center: [6.60, 41.60],
 				clip: [
-					[-150.00, -17.40],
-					[-149.10, -17.99]
+					[-150.00, -16.90],
+					[-147.50, -18.50]
 				],
 
 				scale: 1.0,

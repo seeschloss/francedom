@@ -93,7 +93,8 @@ form input {
 var width = 1000,
     height = 600;
 
-var projection = d3.geo.franceDom();
+var projection = d3.geo.franceDom()
+	.showPolynesie(false);
 
 var svg = d3.select("body").append("svg")
 	.attr("width", width)
@@ -102,8 +103,15 @@ var svg = d3.select("body").append("svg")
 
 var canvas = d3.select("body").append("canvas")
 	.style("z-index", "0")
-    .attr("width", width)
-    .attr("height", height)[0][0].getContext('2d');
+	.attr("class", "canvas")
+	.attr("width", width)
+	.attr("height", height)[0][0].getContext('2d');
+
+var canvasPoly = d3.select("body").append("canvas")
+	.style("z-index", "1")
+	.attr("class", "canvas-polynesie")
+	.attr("width", width)
+	.attr("height", height)[0][0].getContext('2d');
 
 var path = d3.geo.path()
 	.projection(projection);
@@ -198,21 +206,28 @@ queue()
 				.attr("transform", function(d) { return "translate(" + [d.xy[0] + d.xoffset, d.xy[1] + d.yoffset] + ")"; })
 				.text(function(d) { return d.nom_point ? d.nom_point : d.nom; });
 
-		var drawCommunes = function(data) {
-			canvas.clearRect(0, 0, width, height);
+		var drawCommunes = function(canvas, data, filter) {
+			var topo = topojson.feature(communes, data).features;
 
-			data.forEach(function(o) {
-				var topo = topojson.feature(communes, o).features;
-
-				canvas.strokeStyle = 'rgba(100, 100, 100, 0.2)';
-				drawPath(topo, canvas);
-			});
+			canvas.strokeStyle = 'rgba(100, 100, 100, 0.2)';
+			drawPath(topo, canvas, null, filter);
 		};
-		drawCommunes(d3.map(communes.objects).values());
+		d3.map(communes.objects).forEach(function(i, d) {
+			if (i == 'communes987') {
+				drawCommunes(canvasPoly, d, function(d) { return d.id != '98729' });
+			} else {
+				drawCommunes(canvas, d);
+			}
+		});
 
 
 		d3.select('#polynesie').on('change', function() {
-			projection.showPolynesie(this.checked);
+			d3.select('.canvas-polynesie')
+				.transition().duration(200)
+				.style('opacity', 0)
+
+			var showPolynesie = this.checked;
+			projection.showPolynesie(showPolynesie);
 			svg.selectAll(".border")
 				.transition().duration(1000)
 				.attr("d", path);
@@ -221,6 +236,15 @@ queue()
 				.attr("class", function(d) { return "border-outer " + d.properties.adm0_a3 + " " + (d.properties.adm0_a3 === "PYF" && d3.select("#polynesie")[0][0].checked ? "complete" : ""); })
 				.transition().duration(1000)
 				.attr("d", path)
+				.each('end', function(d) {
+					if (d.id == 'PYF') {
+						canvasPoly.clearRect(0, 0, width, height);
+						drawCommunes(canvasPoly, communes.objects.communes987, showPolynesie ? null : function(d) { return d.id != '98729' });
+						d3.select('.canvas-polynesie')
+							.transition().duration(500).ease('cubic-out')
+							.style('opacity', '1');
+					}
+				});
 
 
 			var points = coord.filter(function(d) {
@@ -235,16 +259,22 @@ queue()
 			svg.selectAll(".prefecture-label")
 				.transition().duration(1000)
 				.attr("transform", function(d) { return "translate(" + [d.xy[0] + d.xoffset, d.xy[1] + d.yoffset] + ")"; })
+			
 
 			svg.selectAll(".prefecture")
 				.transition().duration(1000)
 				.attr("cx", function(d) { return d.xy[0]; })
 				.attr("cy", function(d) { return d.xy[1]; });
 			});
+
 });
 
-var drawPath = function(d, canvas, fill) {
+var drawPath = function(d, canvas, fill, filter) {
     d.forEach(function(d) {
+		if (typeof filter == 'function' && !filter(d)) {
+			return;
+		}
+
 		switch (d.geometry.type) {
 			case 'Polygon':
 				d.geometry.coordinates.forEach(function(c, i) {
