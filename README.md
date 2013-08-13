@@ -55,7 +55,7 @@ La projection s'utilise comme n'importe quelle autre projection de d3.geo :
 var projection = d3.geo.franceDom()
 ```
 
-Par défaut, seules Tahiti et Moorea sont incluses (entre Wallis-et-Futuna et la Corse), l'option <code>showPolynesie(true)</code> permet d'afficher la Polynésie française au complet (à l'est de la métropole).
+Par défaut, seules Tahiti et Moorea sont incluses pour représenter la Polynésie (entre Wallis-et-Futuna et la Corse), l'option <code>showPolynesie(true)</code> permet d'afficher la Polynésie française au complet (à l'est de la métropole).
 ```javascript
 var projection = d3.geo.franceDom()
   .showPolynesie(true);
@@ -68,8 +68,10 @@ En plus de la projection adaptée à la France, j'ai essayé de réunir des donn
 
 territoires-communes.topojson
 --------
-Territoires des communes de métropole, DOM (y compris Mayotte) et de Nouvelle-Calédonie.
-Les TAAF et Clipperton ne comportent pas de communes, les deux communes de Saint-Pierre-et-Miquelon sont chacune sur leur île respective, Wallis et Futuna ne comportent pas de communes mais des districts dont je n'ai pas pu trouver les limites précises, et je n'ai pas non plus pu réunir les limites des communes de Polynésie française.
+Territoires des communes de métropole, DOM (y compris Mayotte), Nouvelle-Calédonie et de Polynésie française (pour cette dernière, les communes comprenant plusieurs îles sont représentées par des boîtes englobant le territoire complet de la commune).
+Les TAAF et Clipperton ne comportent pas de communes, les deux communes de Saint-Pierre-et-Miquelon sont chacune sur leur île respective, Wallis et Futuna ne comportent pas de communes mais des districts dont je n'ai pas pu trouver les limites précises.
+
+L'identifiant de chaque *feature* est le code INSEE de la commune représentée.
 
 communes.tsv
 --------
