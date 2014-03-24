@@ -81,3 +81,8 @@ Ce fichier comporte les noms (adaptés à l'affichage, avec accents, etc) des en
 france-dom-tom.topojson
 --------
 Polygones de tous les territoires français.
+
+
+Licence
+=========
+Le projet est distribué sous licence MIT, faites-en ce que vous voulez tant que le texte de la licence MIT reste inclus.
