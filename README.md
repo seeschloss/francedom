@@ -73,16 +73,23 @@ Les TAAF et Clipperton ne comportent pas de communes, les deux communes de Saint
 
 L'identifiant de chaque *feature* est le code INSEE de la commune représentée.
 
+Les données autres que pour la Polynésie française proviennent du référentiel GEOFLA 2013 de l'IGN sous "Licence ouverte" (compatible CC-BY). Les données pour la Polynésie française proviennent du Service SIG de la Polynésie française et sont librement réutilisables (c'est une version relativement peu précise des données de [Te Fenu@](https://www.tefenua.gov.pf)).
+
 communes.tsv
 --------
 Liste des toutes les communes ou autres entités dotées d'un code INSEE. En pratique, ce sont toutes les communes de métropole, DOM, collectivités d'outre-mer, ainsi que les districts de Wallis-et-Futuna, les bases des TAAF, l'île Europa (un seul code est attribué pour les Îles Éparses, Europa en est la plus grande île) et Clipperton.
 Ce fichier comporte les noms (adaptés à l'affichage, avec accents, etc) des entités, leur code INSEE, leurs coordonnées géographiques, leur statut de chef-lieu de département, de région (ou statuts comparables) et éventuellement le nom du point utilisé comme référence géographique (pour les TAAF, le nom associé au code INSEE est le nom de l'île ou archipel, et le point correspond à la base principale).
 
+Cette liste provient en partie de l'IGN, avec des corrections et ajouts de ma part (en particulier pour les Terres Australes et Antarctiques Françaises), sous Licence ouverte.
+
 france-dom-tom.topojson
 --------
 Polygones de tous les territoires français.
 
+Ces données proviennent de [Natural Earth](http://www.naturalearthdata.com) et sont dans le domaine public.
 
 Licence
 =========
 Le projet est distribué sous licence MIT, faites-en ce que vous voulez tant que le texte de la licence MIT reste inclus.
+
+Les données géographiques sont en partie sous [Licence ouverte](http://www.etalab.gouv.fr/pages/licence-ouverte-open-licence-5899923.html), ce qui signifie que vous devez mentionner l'IGN si vous les utilisez.
