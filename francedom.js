@@ -21,6 +21,18 @@ function franceDom() {
 		return point;
 	}
 
+	france.paris = function(coordinates) {
+		var projection = d3.geo.conicConformal()
+			.rotate([-2.3, 0])
+			.center([0, 48.5])
+			.parallels([44, 49])
+			.scale(france.areas.metropole.projection.scale() * 3)
+			.translate(france.areas.metropole.projection([6.40, 49.70]));
+
+		return projection(coordinates);
+	};
+
+
 	france.areas = {};
 	france.areasMap = d3.map();
 	france.areasValues = [];
