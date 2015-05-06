@@ -156,7 +156,7 @@ function franceDom() {
 					.parallels([-10, -20])
 			},
 			saintPierreEtMiquelon: {
-				center: [-6.00, 47.90],
+				center: [-6.00, 48.50],
 				clip: [
 					[-56.48, 47.15],
 					[-56.00, 46.70]
@@ -167,6 +167,19 @@ function franceDom() {
 					.rotate([+56.33, 0])
 					.center([0, +46.9])
 					.parallels([40, 50])
+			},
+			saintMartinSaintBarth: {
+				center: [-6.00, 47.30],
+				clip: [
+					[-63.17, 18.1480],
+					[-62.75, 17.8515]
+				],
+
+				scale: 1.5,
+				projection: d3.geo.conicEqualArea()
+					.rotate([+62.94, 0])
+					.center([0, +18.01])
+					.parallels([+10, +20])
 			},
 			crozet: {
 				center: [-6.77, 50.10],
@@ -232,6 +245,71 @@ function franceDom() {
 					.rotate([+109.25, 0])
 					.center([0, +10.3])
 					.parallels([8, 18])
+			},
+			europa: {
+				center: [-3.60, 41.90],
+				clip: [
+					[40.299, -22.287],
+					[40.425, -22.410]
+				],
+
+				scale: 1.5,
+				projection: d3.geo.conicEqualArea()
+					.rotate([-40.35, 0])
+					.center([0, -22.3])
+					.parallels([-15, -25])
+			},
+			bassasDaIndia: {
+				center: [-3.70, 42.00],
+				clip: [
+					[39.603, -21.410],
+					[39.805, -21.572]
+				],
+
+				scale: 1.5,
+				projection: d3.geo.conicEqualArea()
+					.rotate([-39.7, 0])
+					.center([0, -21.5])
+					.parallels([-15, -25])
+			},
+			juanDeNova: {
+				center: [-3.50, 42.50],
+				clip: [
+					[42.645, -16.983],
+					[42.808, -17.103]
+				],
+
+				scale: 1.5,
+				projection: d3.geo.conicEqualArea()
+					.rotate([-42.7, 0])
+					.center([0, -17.0])
+					.parallels([-15, -25])
+			},
+			glorioso: {
+				center: [-3.10, 42.90],
+				clip: [
+					[47.232, -11.455],
+					[47.485, -11.646]
+				],
+
+				scale: 1.5,
+				projection: d3.geo.conicEqualArea()
+					.rotate([-47.3, 0])
+					.center([0, -11.5])
+					.parallels([-5, -15])
+			},
+			tromelin: {
+				center: [-2.60, 42.50],
+				clip: [
+					[54.509, -15.878],
+					[54.544, -15.908]
+				],
+
+				scale: 1.5,
+				projection: d3.geo.conicEqualArea()
+					.rotate([-54.5, 0])
+					.center([0, -15.9])
+					.parallels([-10, -20])
 			}
 		};
 
